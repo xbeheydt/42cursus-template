@@ -23,8 +23,8 @@ PROJECT_NAME="42cursus-${PROJECT_NAME_LOWER}"
 
 # Functions ====================================================================
 download () {
-    #git clone https://github.com/xbeheydt/42cursus-template ${PROJECT_NAME}
-    mkdir ${PROJECT_NAME}
+    git clone https://github.com/xbeheydt/42cursus-template ${PROJECT_NAME}
+    #mkdir ${PROJECT_NAME}
     cp -R * ${PROJECT_NAME}
     rm -rf ${PROJECT_NAME}/.git
 }
