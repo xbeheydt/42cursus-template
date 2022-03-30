@@ -6,11 +6,11 @@
 /*   By: xbeheydt <xbeheydt@42lausanne.ch>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 11:10:33 by xbeheydt          #+#    #+#             */
-/*   Updated: 2022/03/29 11:11:13 by xbeheydt         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:17:30 by xbeheydt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifdef {{PROJECT_NAME}}_H
+#ifndef {{PROJECT_NAME}}_H
 # define {{PROJECT_NAME}}_H
 
 // YOUR CODE HERE
