@@ -73,6 +73,7 @@ Variables helps to configure where targets build project. Some variables could b
 - ADD C++ support.
 - ADD Documentations ready.
 - ADD files generators for sources, headers, test files and documentation files.
+- TODO make cunits42 doc in tests/README.md
 
 ## Credit
 
