@@ -1,0 +1,128 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile.lib                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: xbeheydt <xbeheydt@42lausanne.ch>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/29 11:21:51 by xbeheydt          #+#    #+#              #
+#    Updated: 2022/03/30 10:43:32 by xbeheydt         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+.PHONY: clean fclean tclean re all tests ctests dbgtests dbgdev del-libft
+
+## Project settings ============================================================
+NAME			= ${LIB_DIR}/{{project_name}}.a
+
+HEADERS			= ${INCLUDE_DIR}/{{project_name}}.h
+INCLUDES		= $(addprefix ${INCLUDE_DIR}/, $(addsuffix .h, $(notdir $(basename ${HEADERS}))))
+
+SRCS			= $(wildcard ${SRC_DIR}/*.c)
+OBJS 			= $(addprefix $(OBJ_DIR)/,$(addsuffix .o,$(notdir $(basename $(SRCS)))))
+
+LIBS			= ft
+LINKS			= $(addprefix ${LIB_DIR}/,$(addprefix lib, $(addsuffix .a,$(notdir $(basename ${LIBS})))))
+
+TESTS			= $(wildcard ${TEST_DIR}/.*.c)
+
+## Compilation settings ========================================================
+CFLAGS			= -Wall -Werror -Wextra
+ifdef DISABLE_ERROR
+	CFLAGS 		= -w
+endif
+CDEBUG			= -g3 -fsanitize=address
+
+IFLAGS			= $(addprefix -I, ${INCLUDES})
+LDFLAGS			= $(addprefix -L, ${LINKS})
+LFLAGS			= $(addprefix -l, ${LIBS})
+
+## Variables ===================================================================
+BUILD_DIR		?= $(PWD)/build
+OBJ_DIR			?= ${BUILD_DIR}/obj/{{project_name}}
+INCLUDE_DIR		?= ${BUILD_DIR}/include
+LIB_DIR			?= ${BUILD_DIR}/lib
+EXE_DIR			?= ${BUILD_DIR}/bin
+SRC_DIR			= $(CURDIR)/src
+HEADER_DIR		= $(CURDIR)/include
+TEST_DIR		= $(CURDIR)/tests
+ARGS			?=
+
+## Commands ====================================================================
+CC				= gcc
+RM				= rm -rf 
+CP				= cp -R
+MKDIR			= mkdir -p
+NORM			= norminette
+ifeq ($(uname -s), Linux)
+	GDB 		= gdb
+else
+	GDB			= lldb --batch -o run
+endif
+
+## Others ======================================================================
+VPATH			= $(sort $(dir ${SRCS}))
+
+## Compilation receipes ========================================================
+all: $(NAME)
+
+$(NAME): $(INCLUDE_DIR) $(LIB_DIR) $(LINKS) $(INCLUDES) $(OBJS)
+	ar rcs $@ ${OBJS}
+	ranlib $@
+
+$(OBJ_DIR)/%.o: %.c
+	$(MKDIR) ${OBJ_DIR}
+	${CC} ${CFLAGS} ${IFLAGS} -c $< -o $@
+
+$(INCLUDE_DIR)/%: ${HEADER_DIR}/%
+	$(MKDIR) ${INCLUDE_DIR}
+	$(CP) $< $@
+
+${LIB_DIR}/%.a: $(CURDIR)/%
+	$(MAKE) -C $<
+
+## Make directories receipes ===================================================
+$(BUILD_DIR):
+	$(MKDIR) $@
+
+$(LIB_DIR):
+	$(MKDIR) $@
+
+$(INCLUDE_DIR):
+	$(MKDIR) $@
+
+$(EXE_DIR):
+	$(MKDIR) $@
+
+## Monsieur Propre ============================================================
+clean:
+	$(RM) ${OBJS}
+
+fclean: clean
+	$(RM) ${NAME}
+	$(RM) ${LINKS}
+	$(RM) ${BUILD_DIR}
+
+tclean:
+	$(RM) ${EXE_DIR}/tests
+
+## Testing receipe ============================================================
+norm:
+	$(NORM)
+
+tests: $(EXE_DIR)
+	$(CC) ${CFLAGS} ${CDEBUG} -I${TEST_DIR} ${LDFLAGS} -o ${EXE_DIR}/$@ ${LFLAGS}
+	${EXE_DIR}/$@ ${ARGS}
+
+ctests: $(BUILD_DIR) $(EXE_DIR)
+	cmake . -B ${BUILD_DIR}
+	make -C ${BUILD_DIR} 42cursus-{{project_name}}-tests
+	cd ${BUILD_DIR}; ctest ${ARGS}
+
+## Lib handlers ===============================================================
+del-libft:
+	$(RM) libft
+
+libft:
+	git clone https://github.com/xbeheydt/42cursus-$@.git $@
+	$(RM) $@/.git
