@@ -20,12 +20,17 @@ PROJECT_TYPE=$1
 PROJECT_NAME_LOWER=$2
 PROJECT_NAME_UPPER=${PROJECT_NAME_LOWER^^}
 PROJECT_NAME="42cursus-${PROJECT_NAME_LOWER}"
+MODE=$3
 
 # Functions ====================================================================
 download () {
-    git clone https://github.com/xbeheydt/42cursus-template ${PROJECT_NAME}
-    #mkdir ${PROJECT_NAME}
-    cp -R * ${PROJECT_NAME}
+	if [[ "$MODE" == "--local" ]]
+	then
+		mkdir ${PROJECT_NAME}
+		cp -R * ${PROJECT_NAME}
+	else
+    	git clone https://github.com/xbeheydt/42cursus-template ${PROJECT_NAME}
+	fi
     rm -rf ${PROJECT_NAME}/.git
 }
 
@@ -67,7 +72,6 @@ init-repo () {
 }
 
 # Main =========================================================================
-
 download
 renamer
 cleaner
