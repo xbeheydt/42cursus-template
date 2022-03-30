@@ -73,3 +73,7 @@ Variables helps to configure where targets build project. Some variables could b
 - ADD C++ support.
 - ADD Documentations ready.
 - ADD files generators for sources, headers, test files and documentation files.
+
+## Credit
+
+- [Xavier Beheydt](https://github.com/xbeheydt)

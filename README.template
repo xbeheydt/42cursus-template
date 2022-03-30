@@ -1,0 +1,48 @@
+# 42 Cursus - {{project_name}}
+
+<!-- Add description HERE -->
+
+## Status
+
+|   STATUS    | RESULTS |
+|:-----------:|:-------:|
+| in progress |  NONE   |
+
+## Build
+
+**Install libft**
+
+```bash
+make libft
+```
+
+**build project**
+
+```bash
+make
+```
+
+## Testing
+
+```bash
+ARGS="<cunits42-arguments>" make tests
+```
+
+## Usage
+
+**Mandatory**
+
+<!-- Add mandatory usage HERE -->
+
+**Bonus**
+
+<!-- Add bonus usage HERE -->
+
+## Documentation
+
+- The documentation about {{project_name}} is [HERE](./docs/README.md).
+- [Project PDF](./docs/pdf/subject_{{project_name}}.pdf)
+
+## Credit
+
+- [Xavier Beheydt](https://github.com/xbeheydt)
