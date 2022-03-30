@@ -16,7 +16,8 @@ This is a 42 project template helps to create and generate a base skeletal proje
 ### Project downloader and generator
 
 ```bash
-curl -Ls https://raw.githubusercontent.com/xbeheydt/42cursus-template/master/run.sh | bash -s -- [lib | exe] <project-name>
+curl -Ls https://raw.githubusercontent.com/xbeheydt/42cursus-template/master/run.sh \ 
+| bash -s -- [lib | exe] <project-name> [--local]
 ```
 
 ### Makefile
