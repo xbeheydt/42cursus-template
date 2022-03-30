@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile.lib                                       :+:      :+:    :+:    #
+#    Makefile.lib.template                              :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: xbeheydt <xbeheydt@42lausanne.ch>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/29 11:21:51 by xbeheydt          #+#    #+#              #
-#    Updated: 2022/03/30 10:43:32 by xbeheydt         ###   ########.fr        #
+#    Updated: 2022/03/30 11:28:57 by xbeheydt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,16 @@
 NAME			= ${LIB_DIR}/{{project_name}}.a
 
 HEADERS			= ${INCLUDE_DIR}/{{project_name}}.h
-INCLUDES		= $(addprefix ${INCLUDE_DIR}/, $(addsuffix .h, $(notdir $(basename ${HEADERS}))))
+INCLUDES		= $(addprefix ${INCLUDE_DIR}/, $(addsuffix .h,\
+						$(notdir $(basename ${HEADERS}))))
 
 SRCS			= $(wildcard ${SRC_DIR}/*.c)
-OBJS 			= $(addprefix $(OBJ_DIR)/,$(addsuffix .o,$(notdir $(basename $(SRCS)))))
+OBJS 			= $(addprefix $(OBJ_DIR)/,$(addsuffix .o,\
+						$(notdir $(basename $(SRCS)))))
 
 LIBS			= ft
-LINKS			= $(addprefix ${LIB_DIR}/,$(addprefix lib, $(addsuffix .a,$(notdir $(basename ${LIBS})))))
+LINKS			= $(addprefix ${LIB_DIR}/,$(addprefix lib,\
+					$(addsuffix .a,$(notdir $(basename ${LIBS})))))
 
 TESTS			= $(wildcard ${TEST_DIR}/.*.c)
 
@@ -94,7 +97,7 @@ $(INCLUDE_DIR):
 $(EXE_DIR):
 	$(MKDIR) $@
 
-## Monsieur Propre ============================================================
+## Monsieur Propre =============================================================
 clean:
 	$(RM) ${OBJS}
 
@@ -106,7 +109,7 @@ fclean: clean
 tclean:
 	$(RM) ${EXE_DIR}/tests
 
-## Testing receipe ============================================================
+## Testing receipe =============================================================
 norm:
 	$(NORM)
 
@@ -119,7 +122,7 @@ ctests: $(BUILD_DIR) $(EXE_DIR)
 	make -C ${BUILD_DIR} 42cursus-{{project_name}}-tests
 	cd ${BUILD_DIR}; ctest ${ARGS}
 
-## Lib handlers ===============================================================
+## Lib handlers ================================================================
 del-libft:
 	$(RM) libft
 

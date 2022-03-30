@@ -41,8 +41,10 @@ renamer () {
         sed -i "s/{{project_name}}/${PROJECT_NAME_LOWER}/g" $file
         sed -i "s/{{PROJECT_NAME}}/${PROJECT_NAME_UPPER}/g" $file
     done
-    mv "./${PROJECT_NAME}/src/{{project_name}}.c" "${PROJECT_NAME}/src/${PROJECT_NAME_LOWER}.c"
-    mv "./${PROJECT_NAME}/include/{{project_name}}.h" "${PROJECT_NAME}/include/${PROJECT_NAME_LOWER}.h"
+    mv "./${PROJECT_NAME}/src/{{project_name}}.c" \
+			"${PROJECT_NAME}/src/${PROJECT_NAME_LOWER}.c"
+    mv "./${PROJECT_NAME}/include/{{project_name}}.h" \
+			"${PROJECT_NAME}/include/${PROJECT_NAME_LOWER}.h"
 }
 
 cleaner () {
@@ -51,15 +53,15 @@ cleaner () {
     rm -rf ${PROJECT_NAME}/.git
     if [[ "$PROJECT_TYPE" == "lib" ]]
     then
-        rm "${PROJECT_NAME}/Makefile.exe"
-        mv "${PROJECT_NAME}/Makefile.lib" "${PROJECT_NAME}/Makefile"
+        rm "${PROJECT_NAME}/Makefile.exe.template"
+        mv "${PROJECT_NAME}/Makefile.lib.template" "${PROJECT_NAME}/Makefile"
     fi
     if [[ "$PROJECT_TYPE" == "exe" ]]
     then
-        rm "${PROJECT_NAME}/Makefile.lib"
-        mv "${PROJECT_NAME}/Makefile.exe" "${PROJECT_NAME}/Makefile"
+        rm "${PROJECT_NAME}/Makefile.lib.template"
+        mv "${PROJECT_NAME}/Makefile.exe.template" "${PROJECT_NAME}/Makefile"
     fi
-    mv ${PROJECT_NAME}/README.template ${PROJECT_NAME}/README.md
+    mv "${PROJECT_NAME}/README.template" ${PROJECT_NAME}/README.md
 }
 
 init-repo () {
